@@ -53,11 +53,11 @@ public class OnlineUserService {
     public void save(JwtUserDto jwtUserDto, String token, HttpServletRequest request){
         String dept = jwtUserDto.getUser().getDept().getName();
         String ip = StringUtils.getIp(request);
-        String browser = StringUtils.getBrowser(request);
+     //   String browser = StringUtils.getBrowser(request);
         String address = StringUtils.getCityInfo(ip);
         OnlineUserDto onlineUserDto = null;
         try {
-            onlineUserDto = new OnlineUserDto(jwtUserDto.getUsername(), jwtUserDto.getUser().getNickName(), dept, browser , ip, address, EncryptUtils.desEncrypt(token), new Date());
+            onlineUserDto = new OnlineUserDto(jwtUserDto.getUsername(), jwtUserDto.getUser().getNickName(), dept, "browser" , ip, address, EncryptUtils.desEncrypt(token), new Date());
         } catch (Exception e) {
             log.error(e.getMessage(),e);
         }
@@ -133,7 +133,7 @@ public class OnlineUserService {
             map.put("部门", user.getDept());
             map.put("登录IP", user.getIp());
             map.put("登录地点", user.getAddress());
-            map.put("浏览器", user.getBrowser());
+           // map.put("浏览器", user.getBrowser());
             map.put("登录日期", user.getLoginTime());
             list.add(map);
         }

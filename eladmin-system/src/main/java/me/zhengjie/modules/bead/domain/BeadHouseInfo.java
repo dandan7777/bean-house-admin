@@ -23,6 +23,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import me.zhengjie.base.BaseEntity;
 import org.hibernate.annotations.*;
 import java.sql.Timestamp;
 import java.io.Serializable;
@@ -31,26 +32,16 @@ import java.io.Serializable;
 * @website https://el-admin.vip
 * @description /
 * @author aaron.hu
-* @date 2021-07-25
+* @date 2021-08-01
 **/
 @Entity
 @Data
 @Table(name="bead_house_info")
-public class BeadHouseInfo implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bead_house_id")
-    @ApiModelProperty(value = "id")
-    private Integer beadHouseId;
-
-    @Column(name = "bead_house_name",nullable = false)
-    @NotBlank
-    @ApiModelProperty(value = "养老院名称")
-    private String beadHouseName;
+public class BeadHouseInfo extends BaseEntity implements Serializable {
 
     @Column(name = "dean_id")
     @ApiModelProperty(value = "院长id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer deanId;
 
     @Column(name = "dean_name",nullable = false)
@@ -58,42 +49,80 @@ public class BeadHouseInfo implements Serializable {
     @ApiModelProperty(value = "院长名称")
     private String deanName;
 
-    @Column(name = "bead_house_evaluate",nullable = false)
-    @NotBlank
-    @ApiModelProperty(value = "养老院评价")
-    private String beadHouseEvaluate;
-
     @Column(name = "bed_num",nullable = false)
-    @NotNull
-    @ApiModelProperty(value = "床位数")
-    private Integer bedNum;
-
-    @Column(name = "create_by")
-    @ApiModelProperty(value = "创建人")
-    private String createBy;
-
-    @Column(name = "create_time")
-    @CreationTimestamp
-    @ApiModelProperty(value = "创建时间")
-    private Timestamp createTime;
-
-    @Column(name = "update_by")
-    @ApiModelProperty(value = "修改人")
-    private String updateBy;
-
-    @Column(name = "update_time")
-    @UpdateTimestamp
-    @ApiModelProperty(value = "修改时间")
-    private Timestamp updateTime;
-
-    @Column(name = "bead_phone",nullable = false)
     @NotBlank
-    @ApiModelProperty(value = "联系电话")
-    private String beadPhone;
+    @ApiModelProperty(value = "床位数")
+    private String bedNum;
 
-    @Column(name = "bead_house_address")
-    @ApiModelProperty(value = "养老院地址")
-    private String beadHouseAddress;
+    @Id
+    @Column(name = "id")
+    @ApiModelProperty(value = "主键")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "bean_name")
+    @ApiModelProperty(value = "养老院名称")
+    private String beanName;
+
+    @Column(name = "tenant_id")
+    @ApiModelProperty(value = "租户")
+    private String tenantId;
+
+    @Column(name = "status")
+    @ApiModelProperty(value = "状态")
+    private String status;
+
+    @Column(name = "remarks")
+    @ApiModelProperty(value = "描述")
+    private String remarks;
+
+    @Column(name = "bean_time")
+    @ApiModelProperty(value = "养老院接待时间")
+    private String beanTime;
+
+    @Column(name = "bean_tel")
+    @ApiModelProperty(value = "养老院电话")
+    private String beanTel;
+
+    @Column(name = "bean_address")
+    @ApiModelProperty(value = "养老院位置")
+    private String beanAddress;
+
+    @Column(name = "lng")
+    @ApiModelProperty(value = "养老院经度")
+    private String lng;
+
+    @Column(name = "lat")
+    @ApiModelProperty(value = "养老院纬度")
+    private String lat;
+
+    @Column(name = "bean_province")
+    @ApiModelProperty(value = "养老院省")
+    private String beanProvince;
+
+    @Column(name = "bean_city")
+    @ApiModelProperty(value = "养老院市")
+    private String beanCity;
+
+    @Column(name = "bean_area")
+    @ApiModelProperty(value = "养老院区")
+    private String beanArea;
+
+    @Column(name = "nurse_num")
+    @ApiModelProperty(value = "养老院医护数量")
+    private String nurseNum;
+
+    @Column(name = "bean_desc")
+    @ApiModelProperty(value = "养老院描述")
+    private String beanDesc;
+
+    @Column(name = "bean_logo")
+    @ApiModelProperty(value = "养老院logo")
+    private String beanLogo;
+
+    @Column(name = "bean_house_evaluate")
+    @ApiModelProperty(value = "评价")
+    private String beanHouseEvaluate;
 
     public void copy(BeadHouseInfo source){
         BeanUtil.copyProperties(source,this, CopyOptions.create().setIgnoreNullValue(true));

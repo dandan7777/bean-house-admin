@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 * @website https://el-admin.vip
 * @description 服务接口
 * @author aaron.hu
-* @date 2021-07-25
+* @date 2021-08-01
 **/
 public interface BeadHouseInfoService {
 
@@ -49,10 +49,10 @@ public interface BeadHouseInfoService {
 
     /**
      * 根据ID查询
-     * @param beadHouseId ID
+     * @param id ID
      * @return BeadHouseInfoDto
      */
-    BeadHouseInfoDto findById(Integer beadHouseId);
+    BeadHouseInfoDto findById(Integer id);
 
     /**
     * 创建

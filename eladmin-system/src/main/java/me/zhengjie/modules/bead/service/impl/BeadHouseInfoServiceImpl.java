@@ -41,7 +41,7 @@ import java.util.LinkedHashMap;
 * @website https://el-admin.vip
 * @description 服务实现
 * @author aaron.hu
-* @date 2021-07-25
+* @date 2021-08-01
 **/
 @Service
 @RequiredArgsConstructor
@@ -63,9 +63,9 @@ public class BeadHouseInfoServiceImpl implements BeadHouseInfoService {
 
     @Override
     @Transactional
-    public BeadHouseInfoDto findById(Integer beadHouseId) {
-        BeadHouseInfo beadHouseInfo = beadHouseInfoRepository.findById(beadHouseId).orElseGet(BeadHouseInfo::new);
-        ValidationUtil.isNull(beadHouseInfo.getBeadHouseId(),"BeadHouseInfo","beadHouseId",beadHouseId);
+    public BeadHouseInfoDto findById(Integer id) {
+        BeadHouseInfo beadHouseInfo = beadHouseInfoRepository.findById(id).orElseGet(BeadHouseInfo::new);
+        ValidationUtil.isNull(beadHouseInfo.getId(),"BeadHouseInfo","id",id);
         return beadHouseInfoMapper.toDto(beadHouseInfo);
     }
 
@@ -78,16 +78,16 @@ public class BeadHouseInfoServiceImpl implements BeadHouseInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(BeadHouseInfo resources) {
-        BeadHouseInfo beadHouseInfo = beadHouseInfoRepository.findById(resources.getBeadHouseId()).orElseGet(BeadHouseInfo::new);
-        ValidationUtil.isNull( beadHouseInfo.getBeadHouseId(),"BeadHouseInfo","id",resources.getBeadHouseId());
+        BeadHouseInfo beadHouseInfo = beadHouseInfoRepository.findById(resources.getId()).orElseGet(BeadHouseInfo::new);
+        ValidationUtil.isNull( beadHouseInfo.getId(),"BeadHouseInfo","id",resources.getId());
         beadHouseInfo.copy(resources);
         beadHouseInfoRepository.save(beadHouseInfo);
     }
 
     @Override
     public void deleteAll(Integer[] ids) {
-        for (Integer beadHouseId : ids) {
-            beadHouseInfoRepository.deleteById(beadHouseId);
+        for (Integer id : ids) {
+            beadHouseInfoRepository.deleteById(id);
         }
     }
 
@@ -96,17 +96,29 @@ public class BeadHouseInfoServiceImpl implements BeadHouseInfoService {
         List<Map<String, Object>> list = new ArrayList<>();
         for (BeadHouseInfoDto beadHouseInfo : all) {
             Map<String,Object> map = new LinkedHashMap<>();
-            map.put("养老院名称", beadHouseInfo.getBeadHouseName());
             map.put("院长id", beadHouseInfo.getDeanId());
             map.put("院长名称", beadHouseInfo.getDeanName());
-            map.put("养老院评价", beadHouseInfo.getBeadHouseEvaluate());
             map.put("床位数", beadHouseInfo.getBedNum());
             map.put("创建人", beadHouseInfo.getCreateBy());
             map.put("创建时间", beadHouseInfo.getCreateTime());
             map.put("修改人", beadHouseInfo.getUpdateBy());
             map.put("修改时间", beadHouseInfo.getUpdateTime());
-            map.put("联系电话", beadHouseInfo.getBeadPhone());
-            map.put("养老院地址", beadHouseInfo.getBeadHouseAddress());
+            map.put("养老院名称", beadHouseInfo.getBeanName());
+            map.put("租户", beadHouseInfo.getTenantId());
+            map.put("状态", beadHouseInfo.getStatus());
+            map.put("描述", beadHouseInfo.getRemarks());
+            map.put("养老院接待时间", beadHouseInfo.getBeanTime());
+            map.put("养老院电话", beadHouseInfo.getBeanTel());
+            map.put("养老院位置", beadHouseInfo.getBeanAddress());
+            map.put("养老院经度", beadHouseInfo.getLng());
+            map.put("养老院纬度", beadHouseInfo.getLat());
+            map.put("养老院省", beadHouseInfo.getBeanProvince());
+            map.put("养老院市", beadHouseInfo.getBeanCity());
+            map.put("养老院区", beadHouseInfo.getBeanArea());
+            map.put("养老院医护数量", beadHouseInfo.getNurseNum());
+            map.put("养老院描述", beadHouseInfo.getBeanDesc());
+            map.put("养老院logo", beadHouseInfo.getBeanLogo());
+            map.put("评价", beadHouseInfo.getBeanHouseEvaluate());
             list.add(map);
         }
         FileUtil.downloadExcel(list, response);

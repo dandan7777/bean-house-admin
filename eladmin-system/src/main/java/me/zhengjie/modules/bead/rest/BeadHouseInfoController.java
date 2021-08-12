@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
 * @website https://el-admin.vip
 * @author aaron.hu
-* @date 2021-07-25
+* @date 2021-08-01
 **/
 @RestController
 @RequiredArgsConstructor
@@ -54,7 +54,7 @@ public class BeadHouseInfoController {
     @GetMapping
     @Log("查询养老院管理")
     @ApiOperation("查询养老院管理")
-    @PreAuthorize("@el.check('beadHouseInfo:list')")
+    @PreAuthorize("@el.check('beadHouseInfo:list','bedInfo:list')")
     public ResponseEntity<Object> query(BeadHouseInfoQueryCriteria criteria, Pageable pageable){
         return new ResponseEntity<>(beadHouseInfoService.queryAll(criteria,pageable),HttpStatus.OK);
     }

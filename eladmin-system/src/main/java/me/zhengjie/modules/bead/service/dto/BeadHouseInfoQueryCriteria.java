@@ -22,7 +22,7 @@ import me.zhengjie.annotation.Query;
 /**
 * @website https://el-admin.vip
 * @author aaron.hu
-* @date 2021-07-25
+* @date 2021-08-01
 **/
 @Data
 public class BeadHouseInfoQueryCriteria{

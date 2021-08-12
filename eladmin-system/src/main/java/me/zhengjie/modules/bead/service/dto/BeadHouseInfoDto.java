@@ -23,16 +23,10 @@ import java.io.Serializable;
 * @website https://el-admin.vip
 * @description /
 * @author aaron.hu
-* @date 2021-07-25
+* @date 2021-08-01
 **/
 @Data
 public class BeadHouseInfoDto implements Serializable {
-
-    /** id */
-    private Integer beadHouseId;
-
-    /** 养老院名称 */
-    private String beadHouseName;
 
     /** 院长id */
     private Integer deanId;
@@ -40,11 +34,8 @@ public class BeadHouseInfoDto implements Serializable {
     /** 院长名称 */
     private String deanName;
 
-    /** 养老院评价 */
-    private String beadHouseEvaluate;
-
     /** 床位数 */
-    private Integer bedNum;
+    private String bedNum;
 
     /** 创建人 */
     private String createBy;
@@ -58,9 +49,54 @@ public class BeadHouseInfoDto implements Serializable {
     /** 修改时间 */
     private Timestamp updateTime;
 
-    /** 联系电话 */
-    private String beadPhone;
+    /** 主键 */
+    private Integer id;
 
-    /** 养老院地址 */
-    private String beadHouseAddress;
+    /** 养老院名称 */
+    private String beanName;
+
+    /** 租户 */
+    private String tenantId;
+
+    /** 状态 */
+    private String status;
+
+    /** 描述 */
+    private String remarks;
+
+    /** 养老院接待时间 */
+    private String beanTime;
+
+    /** 养老院电话 */
+    private String beanTel;
+
+    /** 养老院位置 */
+    private String beanAddress;
+
+    /** 养老院经度 */
+    private String lng;
+
+    /** 养老院纬度 */
+    private String lat;
+
+    /** 养老院省 */
+    private String beanProvince;
+
+    /** 养老院市 */
+    private String beanCity;
+
+    /** 养老院区 */
+    private String beanArea;
+
+    /** 养老院医护数量 */
+    private String nurseNum;
+
+    /** 养老院描述 */
+    private String beanDesc;
+
+    /** 养老院logo */
+    private String beanLogo;
+
+    /** 评价 */
+    private String beanHouseEvaluate;
 }

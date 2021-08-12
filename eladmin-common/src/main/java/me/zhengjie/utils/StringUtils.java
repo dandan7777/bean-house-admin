@@ -49,33 +49,33 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     private static DbConfig config;
     private static final char SEPARATOR = '_';
     private static final String UNKNOWN = "unknown";
+//
+//    private  final UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer
+//            .newBuilder()
+//            .hideMatcherLoadStats()
+//            .withCache(10000)
+//            .withField(UserAgent.AGENT_NAME_VERSION)
+//            .build();
 
-    private static final UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer
-            .newBuilder()
-            .hideMatcherLoadStats()
-            .withCache(10000)
-            .withField(UserAgent.AGENT_NAME_VERSION)
-            .build();
 
-
-    static {
-        SpringContextHolder.addCallBacks(() -> {
-            StringUtils.ipLocal = SpringContextHolder.getProperties("ip.local-parsing", false, Boolean.class);
-            if (ipLocal) {
-                /*
-                 * 此文件为独享 ，不必关闭
-                 */
-                String path = "ip2region/ip2region.db";
-                String name = "ip2region.db";
-                try {
-                    config = new DbConfig();
-                    file = FileUtil.inputStreamToFile(new ClassPathResource(path).getInputStream(), name);
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                }
-            }
-        });
-    }
+//    static {
+//        SpringContextHolder.addCallBacks(() -> {
+//            StringUtils.ipLocal = SpringContextHolder.getProperties("ip.local-parsing", false, Boolean.class);
+//            if (ipLocal) {
+//                /*
+//                 * 此文件为独享 ，不必关闭
+//                 */
+//                String path = "ip2region/ip2region.db";
+//                String name = "ip2region.db";
+//                try {
+//                    config = new DbConfig();
+//                    file = FileUtil.inputStreamToFile(new ClassPathResource(path).getInputStream(), name);
+//                } catch (Exception e) {
+//                    log.error(e.getMessage(), e);
+//                }
+//            }
+//        });
+//    }
 
     /**
      * 驼峰命名法工具
@@ -166,75 +166,78 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * 获取ip地址
      */
     public static String getIp(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        String comma = ",";
-        String localhost = "127.0.0.1";
-        if (ip.contains(comma)) {
-            ip = ip.split(",")[0];
-        }
-        if (localhost.equals(ip)) {
-            // 获取本机真正的ip地址
-            try {
-                ip = InetAddress.getLocalHost().getHostAddress();
-            } catch (UnknownHostException e) {
-                log.error(e.getMessage(), e);
-            }
-        }
-        return ip;
+//        String ip = request.getHeader("x-forwarded-for");
+//        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+//            ip = request.getHeader("Proxy-Client-IP");
+//        }
+//        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+//            ip = request.getHeader("WL-Proxy-Client-IP");
+//        }
+//        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+//            ip = request.getRemoteAddr();
+//        }
+//        String comma = ",";
+//        String localhost = "127.0.0.1";
+//        if (ip.contains(comma)) {
+//            ip = ip.split(",")[0];
+//        }
+//        if (localhost.equals(ip)) {
+//            // 获取本机真正的ip地址
+//            try {
+//                ip = InetAddress.getLocalHost().getHostAddress();
+//            } catch (UnknownHostException e) {
+//                log.error(e.getMessage(), e);
+//            }
+//        }
+        return "";
     }
 
     /**
      * 根据ip获取详细地址
      */
     public static String getCityInfo(String ip) {
-        if (ipLocal) {
-            return getLocalCityInfo(ip);
-        } else {
-            return getHttpCityInfo(ip);
-        }
+//        if (ipLocal) {
+//            return getLocalCityInfo(ip);
+//        } else {
+//            return getHttpCityInfo(ip);
+//        }
+        return "";
     }
 
     /**
      * 根据ip获取详细地址
      */
     public static String getHttpCityInfo(String ip) {
-        String api = String.format(ElAdminConstant.Url.IP_URL, ip);
-        JSONObject object = JSONUtil.parseObj(HttpUtil.get(api));
-        return object.get("addr", String.class);
+//        String api = String.format(ElAdminConstant.Url.IP_URL, ip);
+//        JSONObject object = JSONUtil.parseObj(HttpUtil.get(api));
+//        return object.get("addr", String.class);
+        return "";
     }
 
     /**
      * 根据ip获取详细地址
      */
     public static String getLocalCityInfo(String ip) {
-        try {
-            DataBlock dataBlock = new DbSearcher(config, file.getPath())
-                    .binarySearch(ip);
-            String region = dataBlock.getRegion();
-            String address = region.replace("0|", "");
-            char symbol = '|';
-            if (address.charAt(address.length() - 1) == symbol) {
-                address = address.substring(0, address.length() - 1);
-            }
-            return address.equals(ElAdminConstant.REGION) ? "内网IP" : address;
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
+//        try {
+//            DataBlock dataBlock = new DbSearcher(config, file.getPath())
+//                    .binarySearch(ip);
+//            String region = dataBlock.getRegion();
+//            String address = region.replace("0|", "");
+//            char symbol = '|';
+//            if (address.charAt(address.length() - 1) == symbol) {
+//                address = address.substring(0, address.length() - 1);
+//            }
+//            return address.equals(ElAdminConstant.REGION) ? "内网IP" : address;
+//        } catch (Exception e) {
+//            log.error(e.getMessage(), e);
+//        }
         return "";
     }
 
     public static String getBrowser(HttpServletRequest request) {
-        UserAgent.ImmutableUserAgent userAgent = userAgentAnalyzer.parse(request.getHeader("User-Agent"));
-        return userAgent.get(UserAgent.AGENT_NAME_VERSION).getValue();
+        return "";
+//        UserAgent.ImmutableUserAgent userAgent = userAgentAnalyzer.parse(request.getHeader("User-Agent"));
+//        return userAgent.get(UserAgent.AGENT_NAME_VERSION).getValue();
     }
 
     /**
@@ -258,37 +261,38 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return /
      */
     public static String getLocalIp() {
-        try {
-            InetAddress candidateAddress = null;
-            // 遍历所有的网络接口
-            for (Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces(); interfaces.hasMoreElements();) {
-                NetworkInterface anInterface = interfaces.nextElement();
-                // 在所有的接口下再遍历IP
-                for (Enumeration<InetAddress> inetAddresses = anInterface.getInetAddresses(); inetAddresses.hasMoreElements();) {
-                    InetAddress inetAddr = inetAddresses.nextElement();
-                    // 排除loopback类型地址
-                    if (!inetAddr.isLoopbackAddress()) {
-                        if (inetAddr.isSiteLocalAddress()) {
-                            // 如果是site-local地址，就是它了
-                            return inetAddr.getHostAddress();
-                        } else if (candidateAddress == null) {
-                            // site-local类型的地址未被发现，先记录候选地址
-                            candidateAddress = inetAddr;
-                        }
-                    }
-                }
-            }
-            if (candidateAddress != null) {
-                return candidateAddress.getHostAddress();
-            }
-            // 如果没有发现 non-loopback地址.只能用最次选的方案
-            InetAddress jdkSuppliedAddress = InetAddress.getLocalHost();
-            if (jdkSuppliedAddress == null) {
-                return "";
-            }
-            return jdkSuppliedAddress.getHostAddress();
-        } catch (Exception e) {
-            return "";
-        }
+//        try {
+//            InetAddress candidateAddress = null;
+//            // 遍历所有的网络接口
+//            for (Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces(); interfaces.hasMoreElements();) {
+//                NetworkInterface anInterface = interfaces.nextElement();
+//                // 在所有的接口下再遍历IP
+//                for (Enumeration<InetAddress> inetAddresses = anInterface.getInetAddresses(); inetAddresses.hasMoreElements();) {
+//                    InetAddress inetAddr = inetAddresses.nextElement();
+//                    // 排除loopback类型地址
+//                    if (!inetAddr.isLoopbackAddress()) {
+//                        if (inetAddr.isSiteLocalAddress()) {
+//                            // 如果是site-local地址，就是它了
+//                            return inetAddr.getHostAddress();
+//                        } else if (candidateAddress == null) {
+//                            // site-local类型的地址未被发现，先记录候选地址
+//                            candidateAddress = inetAddr;
+//                        }
+//                    }
+//                }
+//            }
+//            if (candidateAddress != null) {
+//                return candidateAddress.getHostAddress();
+//            }
+//            // 如果没有发现 non-loopback地址.只能用最次选的方案
+//            InetAddress jdkSuppliedAddress = InetAddress.getLocalHost();
+//            if (jdkSuppliedAddress == null) {
+//                return "";
+//            }
+//            return jdkSuppliedAddress.getHostAddress();
+//        } catch (Exception e) {
+//            return "";
+//        }
+        return "";
     }
 }
