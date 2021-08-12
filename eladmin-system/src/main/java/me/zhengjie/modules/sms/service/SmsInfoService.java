@@ -80,4 +80,6 @@ public interface SmsInfoService {
     * @throws IOException /
     */
     void download(List<SmsInfoDto> all, HttpServletResponse response) throws IOException;
+
+    void sendSms(String source);
 }

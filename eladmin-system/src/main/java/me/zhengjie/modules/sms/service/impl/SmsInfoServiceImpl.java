@@ -15,7 +15,11 @@
 */
 package me.zhengjie.modules.sms.service.impl;
 
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import me.zhengjie.modules.sms.domain.SmsInfo;
+import me.zhengjie.sms.annotation.SmsType;
+import me.zhengjie.sms.service.SmsHandler;
 import me.zhengjie.utils.ValidationUtil;
 import me.zhengjie.utils.FileUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,8 @@ import me.zhengjie.modules.sms.service.SmsInfoService;
 import me.zhengjie.modules.sms.service.dto.SmsInfoDto;
 import me.zhengjie.modules.sms.service.dto.SmsInfoQueryCriteria;
 import me.zhengjie.modules.sms.service.mapstruct.SmsInfoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
@@ -49,6 +55,20 @@ public class SmsInfoServiceImpl implements SmsInfoService {
 
     private final SmsInfoRepository smsInfoRepository;
     private final SmsInfoMapper smsInfoMapper;
+    private Map<String, SmsHandler> map;
+    @Autowired
+    public void setMap(List<SmsHandler> list){
+        map = list.stream().collect(
+            Collectors.toMap(smsHadnler -> AnnotationUtils.findAnnotation(smsHadnler.getClass(),
+                SmsType.class).source(),v ->v,(v1,v2) ->v1));
+
+        map.forEach((k,v) ->{
+            System.out.println(k);
+            System.out.println(v);
+
+        });
+    }
+
 
     @Override
     public Map<String,Object> queryAll(SmsInfoQueryCriteria criteria, Pageable pageable){
@@ -111,5 +131,13 @@ public class SmsInfoServiceImpl implements SmsInfoService {
             list.add(map);
         }
         FileUtil.downloadExcel(list, response);
+    }
+
+    @Override
+    public void sendSms(String source) {
+        SmsHandler smsHandler = map.get(source);
+        smsHandler.getToken();
+        smsHandler.Send(null);
+
     }
 }
